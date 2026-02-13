@@ -1,0 +1,24 @@
+.addMember {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  input[type="text"] {
+    width: 70%;
+  }
+  button {
+    width: 30%;
+    padding: 0;
+  }
+}
+.members {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.1rem 0;
+  input[type="text"] {
+    width: 70%;
+  }
+  button {
+    width: 30%;
+  }
+}

@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  nickname  String
+  password  String
+  status    Boolean
+  photos    Photo[]
+  userTrips UserTrip[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("users")
+}
+
+model Trip {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  plan        String?  @db.Text
+  start_date  DateTime @default(now())
+  end_date    DateTime @default(now())
+
+  photos    Photo[]
+  userTrips UserTrip[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("trips")
+}
+
+model UserTrip {
+  userId Int
+  tripId Int
+  owner  Int?
+
+  user User @relation(fields: [userId], references: [id])
+  trip Trip @relation(fields: [tripId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@id([userId, tripId])
+  @@map("usertrip")
+}
+
+model Photo {
+  id    Int    @id @default(autoincrement())
+  photo String
+
+  userId Int
+  tripId Int
+
+  user User @relation(fields: [userId], references: [id])
+  trip Trip @relation(fields: [tripId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("photos")
+}

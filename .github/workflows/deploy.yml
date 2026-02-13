@@ -1,0 +1,36 @@
+name: Deploy to Server
+
+# 1. 언제 실행할 것인가?
+on:
+  push:
+    branches: [ main ] # main 브랜치에 코드가 push될 때마다 실행
+
+jobs: 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 2. SSH를 통해 사용자님의 서버에 접속
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          # 3. 서버 접속 후 실행할 명령어들
+          script: |
+            # 실제 프로젝트가 위치한 폴더로 이동 (사용자님의 폴더명으로 확인 필수!)
+            #cd /home/linux_server  
+
+            cd /home/linux_server/my-trip-project
+            
+            # 깃허브로부터 최신 코드 가져오기
+            git pull origin main
+            # 혹시나 남아있을지 모르는 같은 이름의 컨테이너를 강제로 한 번 더 지우기
+            #docker-compose down --remove-orphans
+            #docker rm -f vite_frontend n8n_app code_server redis_session mysql_db node_backend nginx_proxy nginx || true
+            # 도커 컨테이너 재빌드 및 실행 (무중단 혹은 재시작)
+            # 수정한 코드가 즉시 반영되도록 --build 옵션을 사용합니다.
+            docker-compose up -d --build --remove-orphans
+            # replace public ip:121.125.96.153
+            # replace port outter:2222, inner:22
