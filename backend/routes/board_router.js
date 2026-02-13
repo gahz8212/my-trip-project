@@ -97,6 +97,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
     }
 
     // 2. 본인 게시글이 아닌 경우 차단
+    console.log('post.userId,userId',post.userId,userId)
     if (post.userId !== userId) {
       // DB 컬럼명에 따라 둘 중 하나 사용
       return res
