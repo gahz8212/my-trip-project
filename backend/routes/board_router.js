@@ -91,13 +91,13 @@ router.delete("/:id", requireAuth, async (req, res) => {
   try {
     // 1. 게시글 존재 여부 + 작성자 확인
     const post = await getPostById(postId);
-    console.log("post", post);
-    if (!post) {
+    console.log("postUserId", postUserId);
+    if (!post.rowId) {
       return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
     }
 
     // 2. 본인 게시글이 아닌 경우 차단
-    console.log('post.userId,userId',post.userId,userId)
+    console.log('post.userId,userId',post.userId,post.userId)
     if (post.userId !== userId) {
       // DB 컬럼명에 따라 둘 중 하나 사용
       return res
