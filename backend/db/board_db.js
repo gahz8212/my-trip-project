@@ -55,6 +55,7 @@ async function getPostById(id) {
  */
 async function deletePostById(id) {
   console.log("deleteId", id);
+  await pool.query("DELETE FROM usertrip WHERE tripId = ?", [id]);
   const [result] = await pool.query("DELETE FROM trips WHERE id = ?", [id]);
   return result.affectedRows || 0;
 }
