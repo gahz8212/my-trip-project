@@ -78,6 +78,7 @@ services:
     volumes:
       - /home:/config/workspace
       - /home/linux_server/.gitconfig:/config/.gitconfig
+      - /home/user/code-server/config:/config
     networks:
       - app-network
 

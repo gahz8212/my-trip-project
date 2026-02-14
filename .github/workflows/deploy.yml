@@ -31,6 +31,7 @@ jobs:
             #docker rm -f vite_frontend n8n_app code_server redis_session mysql_db node_backend nginx_proxy nginx || true
             # 도커 컨테이너 재빌드 및 실행 (무중단 혹은 재시작)
             # 수정한 코드가 즉시 반영되도록 --build 옵션을 사용합니다.
-            docker-compose up -d --build --remove-orphans
+            #docker-compose up -d --build --remove-orphans
+            docker-compose down && docker-compose up -d --build
             # replace public ip:121.125.96.153
             # replace port outter:2222, inner:22
