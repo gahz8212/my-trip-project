@@ -8,10 +8,9 @@ const pool = require("./db");
  */
 async function getAllPosts(userId) {
   const [rows] = await pool.query(
-    `SELECT trips.id,trips.title,photos.photo,usertrip.owner FROM 
+    `SELECT trips.id,trips.title,usertrip.owner FROM 
      trips INNER JOIN usertrip ON trips.id=usertrip.tripId 
-     LEFT JOIN photos ON trips.id=photos.tripId 
-     WHERE usertrip.userId=?
+     WHERE usertrip.userId=1
      ORDER BY trips.createdAt DESC`,
     [userId],
   );

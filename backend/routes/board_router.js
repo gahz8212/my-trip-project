@@ -55,14 +55,14 @@ router.post("/", requireAuth, async (req, res) => {
     const newPost = await getPostById(insertId);
     // const newImage=await getImageById()
 
-    try{
+    // try{
 
-      axios.post('https://n8n.memyself.shop/webhook-test/new-trip',{
-        title:normTitle,
-        content:normContent,
+    //   axios.post('https://n8n.memyself.shop/webhook-test/new-trip',{
+    //     title:normTitle,
+    //     content:normContent,
         
-      })
-    }catch(e){console.error("n8n전송에러",e.message)}
+    //   })
+    // }catch(e){console.error("n8n전송에러",e.message)}
 
     if (!newPost) {
       return res
