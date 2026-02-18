@@ -16,6 +16,9 @@ const registerSocketHandlers = require("./socket");
 const { RedisStore } = require("connect-redis");
 const { createClient } = require("redis");
 
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 const redisClient = createClient({
   url: `redis://${process.env.REDIS_HOST || "redis"}:6379`,
 });
@@ -46,9 +49,9 @@ redisClient.connect().catch(console.error);
 const app = express();
 const server = http.createServer(app);
 const allowedOrigins = [
-  // "http://localhost:5173", // 리액트(Vite) 로컬 개발 서버
+  "http://localhost:5173", // 리액트(Vite) 로컬 개발 서버
   "http://localhost",
-  "https://trip.memyself.shop" // 리액트(Vite) 로컬 개발 서버
+  "https://trip.memyself.shop", // 리액트(Vite) 도커 개발 서버
 ];
 const io = new Server(server, {
   cors: {
@@ -128,6 +131,6 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT,'0.0.0.0', () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`서버 실행 중: http://localhost:${PORT}`);
 });
