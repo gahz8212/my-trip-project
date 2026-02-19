@@ -8,6 +8,8 @@ const albumService = require("../db/upload_db.js");
 
 router.post("/", upload.single("image"), async (req, res) => {
   const { tripId } = req.body;
+  console.log("tripId", tripId);
+
   console.log("파일 수신 완료:", req.file.filename);
   try {
     // 1. 로그인 여부 확인 (Passport가 제공하는 함수)

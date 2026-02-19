@@ -1,9 +1,9 @@
 import { io } from "socket.io-client";
 import { useMessageStore } from "./store/messageStore";
 
-const socket = io("https://trip.memyself.shop", {
+const socket = io(import.meta.env.VITE_SOCKET_URL, {
   withCredentials: true,
-  transports: ["polling","websocket"],
+  transports: ["polling", "websocket"],
   reconnection: true, // 연결 끊기면 자동 재시도
   autoConnect: false,
   reconnectionAttempts: 10, // 최대 10번 시도

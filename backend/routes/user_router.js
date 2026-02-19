@@ -2,15 +2,15 @@
 const express = require("express");
 const {
   findUserByEmail,
-  createUser,
   setStatus,
   getStatus,
   getPublicUsers,
+  join,
 } = require("../db/user_db");
-const bcrypt = require("bcrypt");
+
 const router = express.Router();
 const passport = require("passport");
-const { User } = require("../models");
+// const { User } = require("../models");
 
 // POST /api/users/login - 로그인
 router.post("/login", (req, res, next) => {
@@ -86,18 +86,13 @@ router.post("/join", async (req, res) => {
     return res.status(400).json({ error: "이메일과 비밀번호를 입력해주세요." });
   }
   try {
-    // const user = await User.findOne({ where: { email } });
-    const user = await User.findOne({ where: { email } });
-    if (user) {
-      return res.status(401).json({ error: "이미 등록된 유저명 입니다." });
-    }
-    const hash = await bcrypt.hash(password, 12);
-    // console.log(hash);
-    // await createUser(nickname, email, hash);
-    await User.create({ nickname, email, password: hash });
-    return res.status(200).json({ message: "회원가입 성공" });
+    const result = await join(nickname, email, password);
+    console.log("result", result);
+    return res.status(result.code).json(result.message);
   } catch (e) {
     console.error(e);
+    console.log("result", result);
+    return res.status(result.code).json(result.message);
   }
 });
 
