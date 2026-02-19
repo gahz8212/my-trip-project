@@ -3,9 +3,9 @@ name: Deploy to Server
 # 1. 언제 실행할 것인가?
 on:
   push:
-    branches: [ main ] # main 브랜치에 코드가 push될 때마다 실행
+    branches: [main] # main 브랜치에 코드가 push될 때마다 실행
 
-jobs: 
+jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -23,16 +23,16 @@ jobs:
             #cd /home/linux_server  
 
             cd /home/linux_server/my-trip-project
-            
-            
+
+
             # 1. 기존 .env 파일 삭제 (깨끗한 상태를 위해)
             rm -f .env
-            
+
             # 2. GitHub Secrets를 사용하여 .env 파일 생성
-            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-            echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-            echo "COOKIE_SECRET=${{ secrets.COOKIE_SECRET }}" >> .env
-            echo "CODE_SERVER_PASSWORD=${{ secrets.CODE_SERVER_PASSWORD }}" >> .env
+            echo "DATABASE_URL=\"${{ secrets.DATABASE_URL }}\"" >> .env
+            echo "MYSQL_ROOT_PASSWORD=\"${{ secrets.MYSQL_ROOT_PASSWORD }}\"" >> .env
+            echo "COOKIE_SECRET=\"${{ secrets.COOKIE_SECRET }}\"" >> .env
+            echo "CODE_SERVER_PASSWORD=\"${{ secrets.CODE_SERVER_PASSWORD }}\"" >> .env
 
 
 
