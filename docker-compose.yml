@@ -2,7 +2,6 @@ services:
   # 1. Reverse Proxy (Nginx)
   nginx:
     image: nginx:alpine
-    #container_name: nginx_proxy
     ports:
       - "80:80"
     volumes:
@@ -29,15 +28,14 @@ services:
   # 3. Backend (Node.js)
   backend:
     build: ./backend
-    #container_name: node_backend
     restart: always
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=mysql://root:1234@db:3306/trip-db
+      - DATABASE_URL=${DATABASE_URL}
       - REDIS_HOST=redis
       - REDIS_URL=redis://redis:6379
       - REDIS_PORT=6379
-      - COOKIE_SECRET=buen-camino
+      - COOKIE_SECRET=${COOKIE_SECRET}
       - PORT=5000
     depends_on:
       db:
@@ -50,13 +48,12 @@ services:
   # 4. n8n (n8n.memyself.shop)
   n8n_app:
     image: n8nio/n8n
-    #container_name: n8n_app
     restart: always
     environment:
       - N8N_HOST=n8n.memyself.shop
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
-      - WEBHOOK_URL=https://n8n.memyself.shop/  # 웹훅 주소에서 포트 제거
+      - WEBHOOK_URL=${WEBHOOK_URL}  # 웹훅 주소에서 포트 제거
       - NODE_ENV=production
     ports:
       - "5678:5678"
@@ -66,13 +63,12 @@ services:
   # 5. Code Server (code.memyself.shop)
   code_server:
     image: linuxserver/code-server
-    #container_name: code_server
     privileged: true
     environment:
       - PUID=0
       - PGID=0
       - TZ=Asia/Seoul
-      - PASSWORD=your_password_here # 접속 비밀번호 설정
+      - PASSWORD=${CODE_SERVER_SECRET} # 접속 비밀번호 설정  ##
     ports:
       - "8080:8443"
     volumes:
@@ -89,7 +85,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: trip-db
-      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234 ##
     ports:
       - "3309:3306"
     volumes:
@@ -106,7 +102,6 @@ services:
   # 7. Cache (Redis)
   redis:
     image: redis:alpine
-    #container_name: redis_session
     restart: always
     networks:
       - app-network

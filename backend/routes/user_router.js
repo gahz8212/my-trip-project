@@ -87,9 +87,11 @@ router.post("/join", async (req, res) => {
   }
   try {
     const result = await join(nickname, email, password);
+    console.log("result", result);
     return res.status(result.code).json(result.message);
   } catch (e) {
     console.error(e);
+    console.log("result", result);
     return res.status(result.code).json(result.message);
   }
 });

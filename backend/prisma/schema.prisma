@@ -19,7 +19,7 @@ model User {
   email     String     @unique
   nickname  String
   password  String
-  status    Boolean
+  status    Boolean     @default(false)
   photos    Photo[]
   userTrips UserTrip[]
 
@@ -69,7 +69,7 @@ model Photo {
   tripId Int
 
   user User @relation(fields: [userId], references: [id])
-  trip Trip @relation(fields: [tripId], references: [id])
+  trip Trip @relation(fields: [tripId], references: [id], onDelete:Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

@@ -50,18 +50,20 @@ async function getPublicUsers(userId) {
 }
 async function join(nickname, email, password) {
   // const user = await User.findOne({ where: { email } });
-  const [user] = await pool.query("SELECT * FROM users WHERE email=?", [email]);
-  if (user) {
+  const [user] = await pool.query("SELECT id FROM users WHERE email=?", [
+    email,
+  ]);
+  console.log(user[0]);
+  if (user[0]) {
     return { code: 409, message: "이미 존재하는 이메일 입니다" };
   }
   const hash = await bcrypt.hash(password, 12);
   // console.log(hash);
   // await createUser(nickname, email, hash);
-  await pool.query("INSERT INTO users (nickname,email,password) values (?,?,?)", [
-    nickname,
-    email,
-    hash,
-  ]);
+  await pool.query(
+    "INSERT INTO users (nickname,email,password) values (?,?,?)",
+    [nickname, email, hash],
+  );
   return { code: 200, message: "회원가입 성공" };
 }
 module.exports = {

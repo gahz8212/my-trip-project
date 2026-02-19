@@ -1,6 +1,6 @@
 // server/routes/posts.js
 const express = require("express");
-const axios =require('axios')
+const axios = require("axios");
 const {
   getAllPosts,
   createPost,
@@ -33,7 +33,6 @@ router.get("/", requireAuth, async (req, res) => {
 
 // ==================== 게시글 작성 ====================
 router.post("/", requireAuth, async (req, res) => {
-  console.log("trip");
   const { title, content } = req.body;
 
   const userId = req.user.id; // 로그인된 사용자 ID
@@ -55,14 +54,14 @@ router.post("/", requireAuth, async (req, res) => {
     const newPost = await getPostById(insertId);
     // const newImage=await getImageById()
 
-    try{
+    // try{
 
-      axios.post('https://n8n.memyself.shop/webhook-test/new-trip',{
-        title:normTitle,
-        content:normContent,
-        
-      })
-    }catch(e){console.error("n8n전송에러",e.message)}
+    //   axios.post('https://n8n.memyself.shop/webhook-test/new-trip',{
+    //     title:normTitle,
+    //     content:normContent,
+
+    //   })
+    // }catch(e){console.error("n8n전송에러",e.message)}
 
     if (!newPost) {
       return res
@@ -97,7 +96,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
     }
 
     // 2. 본인 게시글이 아닌 경우 차단
-    console.log('post.userId,userId',post.userId,userId)
+    console.log("post.userId,userId", post.userId, userId);
     if (post.userId !== userId) {
       // DB 컬럼명에 따라 둘 중 하나 사용
       return res
