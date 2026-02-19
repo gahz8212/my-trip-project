@@ -70,7 +70,7 @@ services:
       - TZ=Asia/Seoul
       - PASSWORD=${CODE_SERVER_SECRET} # 접속 비밀번호 설정  ##
     ports:
-      - "8080:8443"
+      - "8082:8443"
     volumes:
       - /home:/config/workspace
       - /home/linux_server/.gitconfig:/config/.gitconfig

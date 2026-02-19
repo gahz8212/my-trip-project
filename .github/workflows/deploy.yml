@@ -24,6 +24,18 @@ jobs:
 
             cd /home/linux_server/my-trip-project
             
+            
+            # 1. 기존 .env 파일 삭제 (깨끗한 상태를 위해)
+            rm -f .env
+            
+            # 2. GitHub Secrets를 사용하여 .env 파일 생성
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+            echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+            echo "COOKIE_SECRET=${{ secrets.COOKIE_SECRET }}" >> .env
+            echo "CODE_SERVER_PASSWORD=${{ secrets.CODE_SERVER_PASSWORD }}" >> .env
+
+
+
             # 깃허브로부터 최신 코드 가져오기
             git pull origin main
             # 혹시나 남아있을지 모르는 같은 이름의 컨테이너를 강제로 한 번 더 지우기
