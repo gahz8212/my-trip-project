@@ -75,6 +75,7 @@ services:
       - PGID=0
       - TZ=Asia/Seoul
       - PASSWORD=${CODE_SERVER_PASSWORD} # 접속 비밀번호 설정  ##
+      - AUTH=password
     ports:
       - "8082:8443"
     volumes:
