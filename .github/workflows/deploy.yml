@@ -29,12 +29,13 @@ jobs:
             rm -f .env
 
             # 2. GitHub Secrets를 사용하여 .env 파일 생성
-            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
             echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
             echo "COOKIE_SECRET=${{ secrets.COOKIE_SECRET }}" >> .env
             echo "CODE_SERVER_PASSWORD=${{ secrets.CODE_SERVER_PASSWORD }}" >> .env
-
-
+            echo "VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}}" >> .env
+            echo "VITE_SOCKET_URL=${{secrets.VITE_SOCKET_URL}}" >> .env
+            echo "WEBHOOK_URL=${{secrets.WEBHOOK_URL}}" >> .env
 
             # 깃허브로부터 최신 코드 가져오기
             git pull origin main
