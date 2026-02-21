@@ -59,7 +59,7 @@ router.post("/", requireAuth, async (req, res) => {
     //   axios.post('https://n8n.memyself.shop/webhook-test/new-trip',{
     //     title:normTitle,
     //     content:normContent,
-        
+
     //   })
     // }catch(e){console.error("n8n전송에러",e.message)}
 
@@ -68,7 +68,7 @@ router.post("/", requireAuth, async (req, res) => {
         .status(500)
         .json({ error: "게시글 생성 후 조회에 실패했습니다." });
     }
-
+    console.log("newPost", newPost);
     return res.status(201).json({ newPost, insertId });
   } catch (err) {
     console.error("게시글 작성 오류:", err);

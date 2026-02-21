@@ -44,9 +44,16 @@ async function createPost(title, content, userId) {
 async function getPostById(id) {
   const [rows] = await pool.query("SELECT * FROM trips WHERE id = ?", [id]);
   console.log(rows[0]);
-  const [postUserId]=await pool.query("SELECT userId FROM usertrip WHERE tripId=?",[rows[0].id])
+  const [postUserId] = await pool.query(
+    "SELECT userId,owner FROM usertrip WHERE tripId=?",
+    [rows[0].id],
+  );
   if (!rows || rows.length === 0) return null;
-  return {rowId:rows[0],userId:postUserId[0].userId};
+  return {
+    rowId: rows[0],
+    owner: postUserId[0].owner,
+    userId: postUserId[0].userId,
+  };
 }
 
 /**

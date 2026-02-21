@@ -1,7 +1,7 @@
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
-
+const upload_url = process.env.UPLOAD_URL || "/app/uploads/";
 // 1. 폴더 확인 및 생성
 const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
@@ -11,8 +11,7 @@ if (!fs.existsSync(uploadDir)) {
 // 2. 스토리지 설정
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/app/uploads/");
-    // cb(null, "uploads/");
+    cb(null, upload_url);
   },
   filename: (req, file, cb) => {
     // 한글 파일명 깨짐 방지 처리 (Buffer 사용)

@@ -26,7 +26,7 @@ function Board({ title = "자유 게시판" }) {
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
 
-  const [selectedFile, setSelectedFile] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null);
   // const [result, setResult] = useState(null);
   const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
@@ -68,8 +68,9 @@ function Board({ title = "자유 게시판" }) {
       const image = await sendImage(res.data.insertId);
       console.log("image", image);
       const newPost = {
-        id: res.data.newPost.id,
-        title: res.data.newPost.title,
+        id: res.data.newPost.rowId.id,
+        owner: res.data.newPost.owner,
+        title: newTitle.trim(),
         photo: image,
         tripId: res.data.insertId,
       };
@@ -183,6 +184,7 @@ function Board({ title = "자유 게시판" }) {
           </li>
         )}
         {posts.map((post) => {
+          console.log("post", post);
           return (
             <li key={post.id} className="post-item">
               <div className="post-content">
