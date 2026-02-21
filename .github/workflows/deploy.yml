@@ -26,7 +26,7 @@ jobs:
 
 
             # 1. 기존 .env 파일 삭제 (깨끗한 상태를 위해)
-           # rm -f .env
+            rm -f .env
 
             # 2. GitHub Secrets를 사용하여 .env 파일 생성
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
