@@ -74,7 +74,7 @@ services:
       - PUID=0
       - PGID=0
       - TZ=Asia/Seoul
-      - PASSWORD=${CODE_SERVER_SECRET} # 접속 비밀번호 설정  ##
+      - PASSWORD=${CODE_SERVER_PASSWORD} # 접속 비밀번호 설정  ##
     ports:
       - "8082:8443"
     volumes:
