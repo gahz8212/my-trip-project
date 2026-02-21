@@ -17,7 +17,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          # 3. 서버 접속 후 실행할 명령어들
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
+          CODE_SERVER_PASSWORD: ${{ secrets.CODE_SERVER_PASSWORD }}
+      # 3. 서버 접속 후 실행할 명령어들
           script: |
             # 실제 프로젝트가 위치한 폴더로 이동 (사용자님의 폴더명으로 확인 필수!)
             #cd /home/linux_server  
@@ -26,7 +30,7 @@ jobs:
 
 
             # 1. 기존 .env 파일 삭제 (깨끗한 상태를 위해)
-            rm -f .env
+           # rm -f .env
 
             # 2. GitHub Secrets를 사용하여 .env 파일 생성
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
